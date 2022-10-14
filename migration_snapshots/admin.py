@@ -1,7 +1,6 @@
 from django.contrib import admin
-from . import settings
-from . import models
 
+from . import models, settings
 
 if settings.MIGRATION_SNAPSHOT_MODEL is True:
 

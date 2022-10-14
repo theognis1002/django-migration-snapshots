@@ -2,6 +2,8 @@ import os
 
 from django.core.files import File
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.translation import gettext as _
 
 from . import settings
@@ -137,15 +139,10 @@ if settings.MIGRATION_SNAPSHOT_MODEL is True:
         def __str__(self):
             return f"Snapshot #:{self.pk}"
 
-        def save(self, *args, **kwargs):
-            if not self.output_file:
-                self._record_snapshot()
-            super().save(*args, **kwargs)
-
-        def _record_snapshot(self):
+        def record_snapshot(self):
             graph_name = settings.MIGRATION_SNAPSHOT_FILENAME
-            if self.output_file is None:
-                self.output_file = settings.DEFAULT_SNAPSHOT_FORMAT
+            if self.output_format is None:
+                self.output_format = settings.DEFAULT_SNAPSHOT_FORMAT
 
             file_name = f"{graph_name}.{self.output_format}"
 
@@ -158,3 +155,10 @@ if settings.MIGRATION_SNAPSHOT_MODEL is True:
             finally:
                 os.remove(graph_name)
                 os.remove(file_name)
+
+
+@receiver(post_save, sender=MigrationSnapshot)
+def record_snapshot_signal(sender, instance, **kwargs):
+    post_save.disconnect(record_snapshot_signal, sender=MigrationSnapshot)
+    instance.record_snapshot()
+    post_save.connect(record_snapshot_signal, sender=MigrationSnapshot)

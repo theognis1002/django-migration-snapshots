@@ -139,11 +139,7 @@ class MigrationHistoryUtil:
 
         self.delimiter = delimiter
         self.filename = os.path.splitext(filename)[0]
-        self.digraph = Digraph(comment=options.get("caption"), format=output_format)
-
-    @property
-    def source(self) -> str:
-        return self.digraph.source
+        self.digraph = Digraph(format=output_format)
 
     def _construct_digraph(self) -> None:
         for node in sorted(self.graph.nodes.values(), key=self._get_node_details):
@@ -189,15 +185,6 @@ class MigrationHistoryUtil:
 
         return filename
 
-
-"""
-from visualize.visualizer import MigrationHistoryUtil
-file = MigrationHistoryUtil().create_snapshot(temp_file=True)
-"""
-"""
-from datetime import timedelta
-from django.utils import timezone
-from visualize.visualizer import MigrationHistoryUtil
-date_end = timezone.now() - timedelta(days=365)
-file = MigrationHistoryUtil(date_end=date_end).create_snapshot(temp_file=True)
-"""
+    @property
+    def source(self) -> str:
+        return self.digraph.source
