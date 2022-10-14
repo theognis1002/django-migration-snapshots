@@ -1,7 +1,8 @@
 install:
 	pip install -r requirements.txt -r requirements_dev.txt
-	
-package:
+
+.PHONY: build ## Build bundle
+build:
 	python setup.py sdist
 
 deploy:

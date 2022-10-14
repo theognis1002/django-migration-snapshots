@@ -39,14 +39,22 @@ Add it to your `INSTALLED_APPS`:
 
 Features
 --------
+* Visual representation of migration history
+  * Digraph & Graphical
 
-* Digraph text and visual output
-* `MigrationSnapshot` data model
+.. image:: docs/migration_snapshot.jpeg
+  :width: 400
+  :alt: JPEG visual representation of migration history
+
+* ``MigrationSnapshot`` data model
+* Supported formats
+
+  * *BMP, CGIMAGE, DOT_CANON, DOT, GV, XDOT, XDOT12, XDOT14, EPS, EXR, FIG, GD, GIF, GTK, ICO, CMAP, ISMAP, IMAP, CMAPX, IMAGE_NP, CMAPX_NP, JPG, JPEG, JPE, JPEG_2000, JSON, JSON0, DOT_JSON, XDOT_JSON, PDF, PIC, PICT, APPLE_PICT, PLAIN_TEXT, PLAIN_EXT, PNG, POV_RAY, PS_PDF, PSD, SGI, SVG, SVGZ, TGA, TIF, TIFF, TK, VML, VMLZ, VRML, WBMP, WEBP, XLIB, X11*
 
 
-TODO's
-------
-* Tests
+Testing
+-------
+* TODO
 
 
 Development commands
@@ -55,5 +63,5 @@ Development commands
 ::
 
     make install
-    make package
+    make build
     make deploy
