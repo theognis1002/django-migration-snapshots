@@ -144,6 +144,9 @@ if settings.MIGRATION_SNAPSHOT_MODEL is True:
 
         def _record_snapshot(self):
             graph_name = settings.MIGRATION_SNAPSHOT_FILENAME
+            if self.output_file is None:
+                self.output_file = settings.DEFAULT_SNAPSHOT_FORMAT
+
             file_name = f"{graph_name}.{self.output_format}"
 
             try:

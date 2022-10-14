@@ -26,7 +26,7 @@ Install Django Migration Snapshots::
 
     pip install django-migration-snapshots
 
-Add it to your `INSTALLED_APPS`:
+Add it to your ``INSTALLED_APPS``:
 
 .. code-block:: python
 
