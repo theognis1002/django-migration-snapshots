@@ -132,6 +132,10 @@ class MigrationHistoryUtil:
         delimiter: str = "/",
         **options: dict,
     ) -> None:
+        """
+        Initialize TimeBaseMigrationLoader based on timestamp
+        and set object attributes
+        """
         self.graph = TimeBasedMigrationLoader(
             options.get("connection", connection),
             date_end=options.get("date_end", timezone.now()),
@@ -141,26 +145,41 @@ class MigrationHistoryUtil:
         self.filename = os.path.splitext(filename)[0]
         self.digraph = Digraph(format=output_format)
 
-    def _construct_digraph(self) -> None:
-        for node in sorted(self.graph.nodes.values(), key=self._get_node_details):
-            self._add_node(node)
-            self._add_deps(node)
-
     def _format_label(self, tupled_node: Tuple[str, str]) -> str:
         return f"{self.delimiter}".join(tupled_node)
 
     @staticmethod
     def _get_node_details(node: Node) -> Tuple[str, str]:
+        """
+        Create node details tuple.
+        """
         return (node.app_label, node.name)
 
+    def _construct_digraph(self) -> None:
+        """
+        Construct digraph by adding nodes and node dependencies to digraph object.
+        """
+        for node in sorted(self.graph.nodes.values(), key=self._get_node_details):
+            self._add_node(node)
+            self._add_deps(node)
+
     def _add_node(self, node: Node) -> None:
+        """
+        Create node label and add formatted node tuple.
+        """
         node_label = self._format_label(self._get_node_details(node))
         self.digraph.node(node_label, node_label)
 
     def _add_edges(self, node_to: Node, node_from: Node) -> None:
+        """
+        Add digraph edges between two nodes with formatted labels.
+        """
         self.digraph.edge(self._format_label(node_from), self._format_label(node_to))
 
     def _add_deps(self, node: Node) -> None:
+        """
+        Loop over node dependencies and add respective edges.
+        """
         for dep in node.dependencies:
             if dep[-1] == "__first__":
                 self._add_edges(
@@ -176,6 +195,9 @@ class MigrationHistoryUtil:
     def create_snapshot(
         self, *, view: bool = False, temp_file: bool = False, **kwargs: Union[bool, str]
     ) -> None:
+        """
+        Construct digraph and create either 1.) a temporary file for view-only or 2.) graphical output to disk.
+        """
         self._construct_digraph()
         if temp_file is True:
             with NamedTemporaryFile() as temp:
@@ -187,4 +209,7 @@ class MigrationHistoryUtil:
 
     @property
     def source(self) -> str:
+        """
+        Textual format output of a digraph structure.
+        """
         return self.digraph.source

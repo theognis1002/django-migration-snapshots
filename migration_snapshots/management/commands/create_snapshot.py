@@ -8,6 +8,10 @@ class Command(BaseCommand):
         parser.add_argument("--caption", help="caption for digraph out")
 
     def handle(self, *args, **options):
+        """
+        Create migration snapshot using input arguments.
+        Default format: 'pdf'
+        """
         MigrationSnapshot = apps.get_model("migration_snapshots", "MigrationSnapshot")
         MigrationSnapshot.objects.create(
             output_format=options.get("format", MigrationSnapshot.PDF)
