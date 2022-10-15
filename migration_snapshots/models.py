@@ -1,5 +1,6 @@
 import os
 
+from dateutil.parser import parse
 from django.core.files import File
 from django.db import models
 from django.db.models.signals import post_save
@@ -145,9 +146,12 @@ if settings.MIGRATION_SNAPSHOT_MODEL is True:
                 self.output_format = settings.DEFAULT_SNAPSHOT_FORMAT
 
             file_name = f"{graph_name}.{self.output_format}"
+            date_end = getattr(self, "_date_end", None)
 
             try:
-                visualizer = MigrationHistoryUtil(output_format=self.output_format)
+                visualizer = MigrationHistoryUtil(
+                    output_format=self.output_format, date_end=parse(date_end)
+                )
                 visualizer.create_snapshot()
                 self.graph_source = str(visualizer.source)
                 with open(file_name, "rb") as f:

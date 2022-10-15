@@ -4,14 +4,15 @@ from django.core.management.base import BaseCommand
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
-        parser.add_argument("--format", help="output format for digraph")
+        parser.add_argument(
+            "--format", help="output format for digraph", required=False, default="pdf"
+        )
         parser.add_argument(
             "--date",
             help="end date for migration history output",
             required=False,
             default="",
         )
-        # parser.add_argument("--caption", help="caption for digraph out")
 
     def handle(self, *args, **options):
         """
@@ -19,6 +20,8 @@ class Command(BaseCommand):
         Default format: 'pdf'
         """
         MigrationSnapshot = apps.get_model("migration_snapshots", "MigrationSnapshot")
-        MigrationSnapshot.objects.create(
-            output_format=options.get("format", MigrationSnapshot.PDF)
+        snapshot = MigrationSnapshot(
+            output_format=options.get("format", MigrationSnapshot.PDF),
         )
+        snapshot._date_end = options.get("date")
+        snapshot.save()
