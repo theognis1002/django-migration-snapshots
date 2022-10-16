@@ -86,9 +86,10 @@ Features
 * View migration history based on the miigration's applied timestamp
 
 
-Testing
+TODO's
 -------
-* TODO
+* Testing
+* Additional filters in management command (ie; per app, per model, etc.)
 
 
 Development commands
