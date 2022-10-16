@@ -36,9 +36,15 @@ Add it to your ``INSTALLED_APPS``:
         ...
     )
 
-Execute management command to create snapshot::
+Execute management command to create snapshot
 
+.. code-block:: python
+
+    # creates snapshot of entire migration history
     python manage.py create_snapshot
+
+    # filter migrations before applied date (YYYY-MM-DD)
+    python manage.py create_snapshot --date="2022-10-15"
 
 **OR**
 
@@ -77,7 +83,7 @@ Features
 * Supported output formats
 
   * *BMP, CGIMAGE, DOT_CANON, DOT, GV, XDOT, XDOT12, XDOT14, EPS, EXR, FIG, GD, GIF, GTK, ICO, CMAP, ISMAP, IMAP, CMAPX, IMAGE_NP, CMAPX_NP, JPG, JPEG, JPE, JPEG_2000, JSON, JSON0, DOT_JSON, XDOT_JSON, PDF, PIC, PICT, APPLE_PICT, PLAIN_TEXT, PLAIN_EXT, PNG, POV_RAY, PS_PDF, PSD, SGI, SVG, SVGZ, TGA, TIF, TIFF, TK, VML, VMLZ, VRML, WBMP, WEBP, XLIB, X11*
-* View migration history based on the applied timestamp
+* View migration history based on the miigration's applied timestamp
 
 
 Testing
