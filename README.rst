@@ -93,3 +93,10 @@ Development commands
     make install
     make build
     make deploy
+
+
+License
+-------
+
+This project is provided under the `BSD License <https://github.com/theognis1002/django-migration-snapshots/blob/main/LICENSE>`_
+
