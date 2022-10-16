@@ -13,6 +13,12 @@ from graphviz import Digraph
 
 
 class TimeBasedMigrationLoader(MigrationLoader):
+    """
+    `TimeBasedMigrationLoader` inherits from Django's default `MigrationLoader`
+    overriding the queryset from the `MigrationRecorder` - allowing the filtering of recorded migrations by any provided timestamp.
+    The default is the current timezone-aware timestamp which will fetch all recorded migrations.
+    """
+
     def __init__(
         self,
         *args: Any,
