@@ -88,7 +88,7 @@ Features
 
 TODO's
 -------
-* Testing
+* Additional test coverage
 * Additional filters in management command (ie; per app, per model, etc.)
 
 
@@ -106,6 +106,7 @@ Testing
 -------
 
 ::
+
     make test
 
 
