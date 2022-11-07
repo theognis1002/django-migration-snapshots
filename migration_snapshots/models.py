@@ -160,9 +160,8 @@ if settings.MIGRATION_SNAPSHOT_MODEL is True:
                 os.remove(graph_name)
                 os.remove(file_name)
 
-
-@receiver(post_save, sender=MigrationSnapshot)
-def record_snapshot_signal(sender, instance, **kwargs):
-    post_save.disconnect(record_snapshot_signal, sender=MigrationSnapshot)
-    instance.record_snapshot()
-    post_save.connect(record_snapshot_signal, sender=MigrationSnapshot)
+    @receiver(post_save, sender=MigrationSnapshot)
+    def record_snapshot_signal(sender, instance, **kwargs):
+        post_save.disconnect(record_snapshot_signal, sender=MigrationSnapshot)
+        instance.record_snapshot()
+        post_save.connect(record_snapshot_signal, sender=MigrationSnapshot)

@@ -18,3 +18,6 @@ docs: install
 .PHONY: docs-live ## Generate docs with live reloading
 docs-live: install
 	cd docs && make livehtml
+
+test:
+	pytest

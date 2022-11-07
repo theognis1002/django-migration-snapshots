@@ -102,6 +102,13 @@ Development commands
     make deploy
 
 
+Testing
+-------
+
+::
+    make test
+
+
 License
 -------
 

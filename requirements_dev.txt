@@ -4,3 +4,6 @@ wheel
 zest.releaser
 black
 isort
+pytest
+pytest-django
+pytest-djangoapp
