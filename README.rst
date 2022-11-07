@@ -54,7 +54,7 @@ Create ``MigrationSnapshot`` object programmatically or from the admin panel::
 
 
 Text Snapshot
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^
 
 .. code-block:: python
 
@@ -92,22 +92,22 @@ TODO's
 * Additional filters in management command (ie; per app, per model, etc.)
 
 
-Development commands
----------------------
+Local Development
+-----------------
 
 ::
 
     make install
-    make build
-    make deploy
+    make test
 
 
-Testing
--------
+Deployment
+----------
 
 ::
 
-    make test
+    make build
+    make deploy
 
 
 License
