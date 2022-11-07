@@ -142,16 +142,20 @@ class MigrationHistoryUtil:
         Initialize TimeBaseMigrationLoader based on timestamp
         and set object attributes
         """
-        self.graph = TimeBasedMigrationLoader(
+        migration_loader = TimeBasedMigrationLoader(
             options.get("connection", connection),
             date_end=options.get("date_end", timezone.now()),
-        ).graph
+        )
+        self.graph = migration_loader.graph
 
         self.delimiter = delimiter
         self.filename = os.path.splitext(filename)[0]
         self.digraph = Digraph(format=output_format)
 
     def _format_label(self, tupled_node: Tuple[str, str]) -> str:
+        """
+        Hook to provide custom formatting if desired
+        """
         return f"{self.delimiter}".join(tupled_node)
 
     @staticmethod
@@ -202,7 +206,9 @@ class MigrationHistoryUtil:
         self, *, view: bool = False, temp_file: bool = False, **kwargs: Union[bool, str]
     ) -> None:
         """
-        Construct digraph and create either 1.) a temporary file for view-only or 2.) graphical output to disk.
+        Construct digraph and create either:
+        1.) a temporary file for view-only
+        2.) graphical output to disk.
         """
         self._construct_digraph()
         if temp_file is True:
