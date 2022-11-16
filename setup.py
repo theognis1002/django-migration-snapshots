@@ -50,8 +50,8 @@ setup(
     description="""Capture django migration history snapshots""",
     long_description=readme,
     author="Michael McClelland",
-    author_email="mmcclelland1002@thesummitgrp.com",
-    url="https://github.com/mmcclelland1002/django-migration-snapshots",
+    author_email="mmcclelland@thesummitgrp.com",
+    url="https://github.com/Lenders-Cooperative/django-migration-snapshots",
     packages=[
         "migration_snapshots",
     ],
