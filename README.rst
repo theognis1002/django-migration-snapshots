@@ -12,7 +12,7 @@ Django Migration Snapshots
    :target: https://github.com/psf/black
 
 
-Capture django migration history snapshots (represented as a directed graph) in both textual and graphical outputs.
+Capture snapshots of your django project's migration history. These snapshots are represented as a directed graph using ``pygraphviz`` in both textual and graphical formats.
 
 Documentation
 -------------
@@ -59,7 +59,7 @@ Add it to your ``INSTALLED_APPS``:
     from django.apps import AppConfig
     from django.db.models.signals import post_migrate
 
-    def my_callback(sender, **kwargs):
+    def my_snapshot_callback(sender, **kwargs):
         # Create migration snapshot
         MigrationSnapshot.objects.create(output_format="pdf")
 
@@ -68,7 +68,7 @@ Add it to your ``INSTALLED_APPS``:
 
         def ready(self):
             # send signal only once after all migrations execute
-            post_migrate.connect(my_callback, sender=self)
+            post_migrate.connect(my_snapshot_callback, sender=self)
 
 
 Text Snapshot
