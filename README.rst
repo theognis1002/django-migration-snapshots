@@ -2,13 +2,13 @@
 Django Migration Snapshots
 =============================
 
-.. image:: https://img.shields.io/pypi/v/django-migration-snapshots.svg?style=for-the-badge
+.. image:: https://img.shields.io/pypi/v/django-migration-snapshots.svg
    :target: https://pypi.org/project/django-migration-snapshots/
 
-.. image:: https://img.shields.io/pypi/pyversions/django-migration-snapshots?style=for-the-badge
+.. image:: https://img.shields.io/pypi/pyversions/django-migration-snapshots
    :target: https://pypi.org/project/django-migration-snapshots/
 
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
 
 
