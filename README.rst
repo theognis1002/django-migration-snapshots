@@ -12,7 +12,7 @@ Django Migration Snapshots
    :target: https://github.com/psf/black
 
 
-Capture django migration history snapshots
+Capture django migration history snapshots (represented as a directed graph) in both textual and graphical outputs.
 
 Documentation
 -------------
@@ -36,8 +36,8 @@ Add it to your ``INSTALLED_APPS``:
         ...
     )
 
-Execute management command to create snapshot
-
+1) Execute management command to create snapshot
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: python
 
     # creates snapshot of entire migration history
@@ -46,15 +46,33 @@ Execute management command to create snapshot
     # filter migrations before applied date (YYYY-MM-DD)
     python manage.py create_snapshot --date="2022-10-15"
 
-**OR**
-
-Create ``MigrationSnapshot`` object programmatically or from the admin panel::
+2) Create object programmatically or from the admin panel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: python
 
     MigrationSnapshot.objects.create(output_format="pdf")
 
+3) Automatically create migration snapshots with the `post_migrate` signal
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: python
+
+    from django.apps import AppConfig
+    from django.db.models.signals import post_migrate
+
+    def my_callback(sender, **kwargs):
+        # Create migration snapshot
+        MigrationSnapshot.objects.create(output_format="pdf")
+
+    class MyAppConfig(AppConfig):
+        ...
+
+        def ready(self):
+            # send signal only once after all migrations execute
+            post_migrate.connect(my_callback, sender=self)
+
 
 Text Snapshot
-^^^^^^^^^^^^^
+-------------
 
 .. code-block:: python
 
@@ -70,7 +88,7 @@ Text Snapshot
 
 
 Graphical Snapshot
-^^^^^^^^^^^^^^^^^^
+------------------
 
 .. image:: docs/migration_snapshot.jpeg
   :width: 600
@@ -113,5 +131,5 @@ Deployment
 License
 -------
 
-This project is provided under the `BSD License <https://github.com/theognis1002/django-migration-snapshots/blob/main/LICENSE>`_
+This project is provided under the `BSD License <https://github.com/theognis1002/django-migration-snapshots/blob/main/LICENSE>`_.
 
